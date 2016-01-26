@@ -14,7 +14,7 @@ None yet!
 
 ### Server-side
 #### `pre-receive` hooks
-##### **Case-insensitive branches**
+##### [**Case-insensitive branches**](pre-receive/case-insensitive-branches.sh)
 Reject any updates to branches with the same name but different casing, or to non-lowercase branch prefixes.
 (which are used by [Atlassian Stash/Bitbucket Server](https://confluence.atlassian.com/bitbucketserver/using-branches-in-bitbucket-server-776639968.html#UsingbranchesinBitbucketServer-Configuringthebranchingmodel))
 
