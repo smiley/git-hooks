@@ -12,7 +12,8 @@ SED_NORMALIZE_GIT_REF_NAMES="s/ *//;s/\* *//;s/^/refs\/heads\//;";
 #                                                       4. Substitute every newline with a space    -- "s/\n/ /g"
 SED_JOIN_ALL_LINES=":a;N;$!ba;s/\n/ /g";
 
-SED_STRIP_REFS="s/^refs\/heads\///;t;s/^refs\/tags\///;";
+# Strip either "refs/heads/" or "refs/tags/", but not both, and only at the beginning.
+SED_STRIP_REFS="s/^refs\/heads\///;t;s/^refs\/tags\///";
 
 RE_GIT_EXTRACT_BRANCH_FOLDERS="(?<=refs/heads/).*(?=/)";
 
@@ -119,8 +120,7 @@ if [ ${#uppercase_branch_folders[@]} -gt 0 ]; then
     echo "  Some of your branches have different-case \"branch folders\"."
     echo "  For example, \"Feature/branch-name\" instead of \"feature/branch-name\"."
     echo
-    echo "  You have ${#uppercase_branch_folders[@]} branches with non-lowercase"
-    echo "  \"branch folders\":"
+    echo "  You have ${#uppercase_branch_folders[@]} branches with non-lowercase \"branch folders\":"
     for (( i = 0; i < ${#uppercase_branch_folders[@]}; i++)); do
         declare -i index=i+1
         branch=`echo -n ${uppercase_branch_folders[i]} | sed -r "$SED_STRIP_REFS"`;
