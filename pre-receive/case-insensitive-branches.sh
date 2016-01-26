@@ -12,13 +12,13 @@ SED_NORMALIZE_GIT_REF_NAMES="s/ *//;s/\* *//;s/^/refs\/heads\//;";
 #                                                       4. Substitute every newline with a space    -- "s/\n/ /g"
 SED_JOIN_ALL_LINES=":a;N;$!ba;s/\n/ /g";
 
-SED_STRIP_REFS="s/refs\/heads\///";
+SED_STRIP_REFS="s/^refs\/heads\///;t;s/^refs\/tags\///;";
 
-RE_GIT_EXTRACT_BRANCH_FOLDERS="(?<=refs/heads/). *(?=/)";
+RE_GIT_EXTRACT_BRANCH_FOLDERS="(?<=refs/heads/).*(?=/)";
 
 GREP_CONTAINS_UPPERCASE="[A-Z]";
 
-declare -i TRUE=1;
+declare -i TRUE=0;
 declare -i FALSE=1;
 
 CONTACT="";
@@ -74,7 +74,7 @@ declare -a name_conflict_branches;
 
 declare -i RET=0;
 while read from_ref to_ref ref_name; do
-    normalized_ref=`echo -n $ref_name | sed "$SED_STRIP_REFS"`;
+    normalized_ref=`echo -n $ref_name | sed -r "$SED_STRIP_REFS"`;
     branch_folders=`get_branch_folder_tree $ref_name`;
     
     if contains_uppercase "$branch_folders"; then
@@ -84,7 +84,7 @@ while read from_ref to_ref ref_name; do
     
     for branch in `get_matching_caseinsensitive_branches $ref_name`; do
         if [ $branch != $ref_name ]; then
-            normalized_branch=`echo -n $branch | sed "$SED_STRIP_REFS"`;
+            normalized_branch=`echo -n $branch | sed -r "$SED_STRIP_REFS"`;
             name_conflict_branches+=("$normalized_ref $normalized_branch");
             RET=1;
         fi
@@ -123,7 +123,7 @@ if [ ${#uppercase_branch_folders[@]} -gt 0 ]; then
     echo "  \"branch folders\":"
     for (( i = 0; i < ${#uppercase_branch_folders[@]}; i++)); do
         declare -i index=i+1
-        branch=${uppercase_branch_folders[i]};
+        branch=`echo -n ${uppercase_branch_folders[i]} | sed -r "$SED_STRIP_REFS"`;
         specifier="`get_uppercase_marker_string $branch`";
     echo "    $index. \"$branch\""
     echo "        $specifier"
