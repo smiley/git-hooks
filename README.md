@@ -10,7 +10,10 @@ your changes but before the server *applies* them -- used to enforce certain rep
 
 ## Hook directory
 ### Client-side
-None yet!
+#### `pre-commit` hooks
+##### [**Disallow including `StdAfx.h` in header files (`.h`)**](pre-commit/dont-include-stdafx-in-headers.sh)
+Reject any commits which modified or added a header file so that it'd `#include` the file "StdAfx.h",
+which is used by the [pre-compiled headers feature in MSVC](https://msdn.microsoft.com/en-us/library/szfdksca.aspx).
 
 ### Server-side
 #### `pre-receive` hooks
