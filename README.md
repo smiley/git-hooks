@@ -14,6 +14,7 @@ your changes but before the server *applies* them -- used to enforce certain rep
 ##### [**Disallow including `StdAfx.h` in header files (`.h`)**](pre-commit/dont-include-stdafx-in-headers.sh)
 Reject any commits which modified or added a header file so that it'd `#include` the file "StdAfx.h",
 which is used by the [pre-compiled headers feature in MSVC](https://msdn.microsoft.com/en-us/library/szfdksca.aspx).
+(It's preferable to include `StdAfx.h` only in code files (`.c[pp]`))
 
 ### Server-side
 #### `pre-receive` hooks
