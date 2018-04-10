@@ -16,6 +16,10 @@ Reject any commits which modified or added a header file so that it'd `#include`
 which is used by the [pre-compiled headers feature in MSVC](https://msdn.microsoft.com/en-us/library/szfdksca.aspx).
 (It's preferable to include `StdAfx.h` only in code files (`.c[pp]`))
 
+#### `pre-push` hooks
+##### [**Ask the user to confirm a push to "master"**](pre-push/prevent-push-to-protected-branch.sh)
+Before proceeding a `git push` to `master`, ask the user if they really did mean to do that.
+
 ### Server-side
 #### `pre-receive` hooks
 ##### [**Case-insensitive branches**](pre-receive/case-insensitive-branches.sh)
