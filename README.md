@@ -1,28 +1,31 @@
 # git-hooks
 A collection of useful git hooks that I've written over time to deal with various SCM issues.
 
-## What are "git hooks"?
+# What are "git hooks"?
 [Git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) are specialized
 scripts, run at, before or after specific commands in Git. They can be used for special-use
 git repositories, like a `post-receive` hook -- called after `git push` -- which deploys
 the code you just pushed. Or a `pre-receive` hook -- called during `git push`, after *sending*
 your changes but before the server *applies* them -- used to enforce certain repository policies.
 
-## Hook directory
-### Client-side
-#### `pre-commit` hooks
-##### [**Disallow including `StdAfx.h` in header files (`.h`)**](pre-commit/dont-include-stdafx-in-headers.sh)
+# Hook directory
+## Client-side
+### `pre-commit` hooks
+#### **[Disallow including `StdAfx.h` in header files (`.h`)](pre-commit/dont-include-stdafx-in-headers.sh)**
+
 Reject any commits which modified or added a header file so that it'd `#include` the file "StdAfx.h",
 which is used by the [pre-compiled headers feature in MSVC](https://msdn.microsoft.com/en-us/library/szfdksca.aspx).
 (It's preferable to include `StdAfx.h` only in code files (`.c[pp]`))
 
-#### `pre-push` hooks
-##### [**Ask the user to confirm a push to "master"**](pre-push/prevent-push-to-protected-branch.sh)
+### `pre-push` hooks
+#### **[Ask the user to confirm a push to "master"](pre-push/prevent-push-to-protected-branch.sh)**
+
 Before proceeding a `git push` to `master`, ask the user if they really did mean to do that.
 
-### Server-side
-#### `pre-receive` hooks
-##### [**Case-insensitive branches**](pre-receive/case-insensitive-branches.sh)
+## Server-side
+### `pre-receive` hooks
+#### **[Case-insensitive branches](pre-receive/case-insensitive-branches.sh)**
+
 Reject any updates to branches with the same name but different casing, or to non-lowercase branch prefixes.
 (which are used by [Atlassian Stash/Bitbucket Server](https://confluence.atlassian.com/bitbucketserver/using-branches-in-bitbucket-server-776639968.html#UsingbranchesinBitbucketServer-Configuringthebranchingmodel))
 
