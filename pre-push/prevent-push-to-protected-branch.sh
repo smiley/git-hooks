@@ -1,6 +1,6 @@
 #!/bin/sh
 protected_branch='master'  
-current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+current_branch=$(git symbolic-ref --quiet --short HEAD)
 
 if [ $protected_branch = $current_branch ]  
 then  
